@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Be Positive</title>
+    <meta name="description" content="A Random Advice">
+    <meta name="keywords" content="Random, Advice">
+    <meta name="author" content="Jatin Dhar">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="bpp.png" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+    <div class="navbar">
+        <a class="a-center" href="#">Be Positive</a>
+    </div>
+    <div id="particles-js"></div>
+    <div class="main">
+        <div class="my-box">
+            <img src="bpp.png" class="avatar">
+            <p style="text-justify: inter-word; text-align: justify;" class="quote"><i class="fa fa-quote-left"
+                    id="q-vis">&nbsp;</i> <span id="quote">Hi Stranger, feeling depressed? Here's a random advice</span></p>
+            <hr />
+            <div class="text-center">
+                <button id="btn-quote" class="btn-quote">Get Started with One </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="snackbar">Here You Go :-)</div>
+
+    <div class="footer">
+        <p>By <a href="https://github.com/jatindhar" title="Check My Other Projects">Jatin Dhar</a> | Version : 1.1.0</p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="assets/particles.js"></script>
+    <script>
+        particlesJS.load('particles-js', 'assets/particlesjs-config.json', function () {
+            console.log('callback - particles.js config loaded');
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#q-vis").hide();
+            $("#btn-quote").click(function () {
+                $.get("https://api.adviceslip.com/advice", function (data, status) {
+                    var d = JSON.parse(data);
+                    // alert("Data: " + d.slip.advice + "\nStatus: " + status);
+                    var advice = d.slip.advice;
+                    // $('#quote').addClass("italics");
+                    $("#q-vis").show();
+                    $("#quote").text(d.slip.advice);
+                    $("#btn-quote").text("Another One 💡");
+                    var x = document.getElementById("snackbar");
+                    x.className = "show";
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
